@@ -67,6 +67,14 @@ def main():
                     explosions.append(Explosion(ship.x, ship.y, SHIP_SIZE * 2))
                     # reset statku do środka ekranu z zerową prędkością
                     ship = Ship(SCREEN_W / 2, SCREEN_H / 2)
+                    
+        for b in bullets:
+            if b.alive:
+                if circles_collide(ship.x, ship.y, SHIP_SIZE * 1.2, b.x, b.y, b.radius):
+                    b.alive = False
+                    rl.play_sound(sound_explosion)
+                    explosions.append(Explosion(ship.x, ship.y, SHIP_SIZE * 2))
+                    ship = Ship(SCREEN_W / 2, SCREEN_H / 2)
 
         bullets = [b for b in bullets if b.alive]
         asteroids = [a for a in asteroids if a.alive]
