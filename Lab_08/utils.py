@@ -1,5 +1,5 @@
 import math
-from random import random
+import random
 
 SCREEN_W = 800
 SCREEN_H = 600
@@ -34,8 +34,16 @@ def circles_collide(x1: float, y1: float, r1: float, x2: float, y2: float, r2: f
    return distance < (r1 + r2)
 
 # Funkcja generująca losowe pozycje i rozmiary asteroid
-def generate_random_asteroid() -> tuple[float, float, float]:
-    x = random() * SCREEN_W
-    y = random() * SCREEN_H
-    radius = random() * 40 + 20
-    return (x, y, radius)
+def generate_random_asteroid() -> tuple[float, float, int]:
+    x = random.random() * SCREEN_W
+    y = random.random() * SCREEN_H
+    level = random.choices([3, 2, 1], weights=[0.5, 0.3, 0.2])[0]  # większe asteroidy są bardziej prawdopodobne
+    return (x, y, level)
+
+def cleanup_dead_entities(entities_list):
+    entities_list[:] = [item for item in entities_list if item.alive]
+    
+def rotate_point(x: float, y: float, angle: float) -> tuple[float, float]:
+    cos_a = math.cos(angle)
+    sin_a = math.sin(angle)
+    return (x * cos_a - y * sin_a, x * sin_a + y * cos_a)
