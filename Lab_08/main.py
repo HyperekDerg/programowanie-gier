@@ -26,6 +26,7 @@ from config import (
     ASTEROID_EXPLOSION_SCALE,
     HUD_FONT_SIZE_LARGE,
     HUD_FONT_SIZE_SMALL,
+    WAVE_DELAY,
 )
 
 
@@ -40,6 +41,8 @@ current_state = State.MENU
 score = 0
 best = 0
 victory = False
+wave = 1
+wave_timer = 0.0
 
 ship = None
 bullets = []
@@ -51,15 +54,25 @@ sound_explosion = None
 
 
 def init_game():
-    global ship, bullets, asteroids, explosions, score, victory
+    global ship, bullets, asteroids, explosions, score, wave, wave_timer, victory
+    
     score = 0
+    wave = 1
+    wave_timer = 0.0
     victory = False
-    ship = Ship(SCREEN_W / 2, SCREEN_H / 2)
+    
     bullets.clear()
     explosions.clear()
-    asteroids[:] = [
-        Asteroid(*generate_random_asteroid()) for _ in range(NUMBER_OF_ASTEROIDS)
-    ]
+    asteroids.clear()
+    
+    ship = Ship(SCREEN_W / 2, SCREEN_H / 2)
+    
+    spawn_wave(NUMBER_OF_ASTEROIDS)
+
+def spawn_wave(count):
+    global asteroids
+    for _ in range(count):
+        asteroids.append(Asteroid(*generate_random_asteroid()))
 
 
 def handle_collisions():
@@ -115,8 +128,7 @@ def handle_collisions():
 
 
 def update_game(dt):
-    global current_state, victory
-
+    global current_state, victory, wave, wave_timer
     ship.update(dt)
     ship.wrap()
 
@@ -138,14 +150,27 @@ def update_game(dt):
     cleanup_dead_entities(explosions)
 
     # Warunek Zwycięstwa
-    if not asteroids and current_state == State.GAME:
-        victory = True
-        current_state = State.GAME_OVER
+    if len(asteroids) == 0:
+        wave_timer += dt
+        if wave_timer >= WAVE_DELAY:
+            wave += 1
+            wave_timer = 0.0
+            spawn_wave(NUMBER_OF_ASTEROIDS + (wave - 1) * 2)
 
 
 def draw_hud():
     rl.draw_text(f"SCORE: {score}", 20, 20, HUD_FONT_SIZE_LARGE, rl.RAYWHITE)
     rl.draw_text(f"BEST:  {best}", 20, 50, HUD_FONT_SIZE_SMALL, rl.GOLD)
+
+    wave_text = f"WAVE: {wave}"
+    text_w = rl.measure_text(wave_text, 24)
+    rl.draw_text(wave_text, SCREEN_W // 2 - text_w // 2, 20, 24, rl.RAYWHITE)
+
+    if not asteroids:
+        msg = "NEXT WAVE INCOMING..."
+        msg_w = rl.measure_text(msg, 20)
+        rl.draw_text(msg, SCREEN_W // 2 - msg_w // 2, SCREEN_H // 2, 20, rl.GOLD)
+
     rl.draw_text(f"FPS: {rl.get_fps()}", SCREEN_W - 80, 20, 16, rl.GREEN)
 
 
