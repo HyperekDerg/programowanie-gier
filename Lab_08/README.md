@@ -1,29 +1,23 @@
-# Lab 07 – Projekt: Asteroids
+# Lab 08 – Projekt: Asteroids
 
-## Pociski, Zasoby i Kolizje
+## FSM, Podział Asteroid i Domknięcie Projektu
 
 ### Zrealizowane funkcjonalności
 
-W ramach laboratorium rozbudowano projekt o pliki `bullet.py`, `explosion.py` oraz katalog `assets`. Zrealizowano następujące elementy:
-
-- klasę pocisku poruszającego się z prędkością zależną od kąta statku w chwili strzału, z ograniczeniem do 4 pocisków jednocześnie na ekranie,
-- mechanizm TTL (Time-To-Live) – pocisk automatycznie znika po upływie zadanego czasu; nieaktywne pociski usuwane są przez list comprehension,
-- strzelanie wywoływane przez `iskeypressed` – rejestruje pojedyncze naciśnięcie klawisza, w odróżnieniu od `iskeydown` reagującego na przytrzymanie,
-- obsługę dźwięku – inicjalizacja urządzenia audio, załadowanie plików dźwiękowych oraz poprawne zwolnienie zasobów po wyjściu z pętli głównej (kolejność zwalniania ma znaczenie),
-- proceduralne tło gwiazd – jednorazowo generowana lista losowych pozycji punktów rysowanych co klatkę jako pierwsze (zarządzanie kolejnością warstw),
-- funkcję `circle_collision(x1, y1, r1, x2, y2, r2)` w `utils.py` sprawdzającą kolizję dwóch okręgów na podstawie `math.hypot`,
-- kolizję pocisk–asteroida: oznaczanie obiektów jako nieaktywne w fazie sprawdzania, czyszczenie list w osobnej fazie przez list comprehension – zapobiega modyfikacji listy podczas iteracji,
-- klasę `Explosion` w `explosion.py` – animacja okręgu konturowego o rosnącym promieniu, zarządzana listą analogicznie do pocisków.
-
+- trzypoziomowy podział asteroid – Asteroid przyjmuje level (1–3), który wyznacza rozmiar i prędkość; - metoda split() zwraca dwie mniejsze asteroidy lub pustą listę dla poziomu 1,
+- maszyna stanów (FSM) z trzema stanami MENU, GAME, GAME_OVER opartymi na enum.Enum; każdy stan ma osobne funkcje update_* i draw_*,
+- system punktacji – zmienne score i best; mniejsze asteroidy dają więcej punktów; draw_hud() wyświetla wynik w rogu ekranu,
+- warunki końca gry: śmierć przez kolizję statku z asteroidą oraz zwycięstwo po zniszczeniu wszystkich asteroid (końcowo zmieniono na fale bez końca, jednak w historii commitów znajduje się ta zmiana),
+- refaktoryzacja: magic numbers przeniesione do config.py, powtórzony kod filtrowania list wydzielony do utils.py, opisowe nazwy zmiennych.
 ### Zadanie Dodatkowe: Kolizja Statek–Asteroida
 
-Zrealizowano oba zadania dodatkowe – wykrywanie kolizji statku z asteroidą. Statek traktowany jest jako koło o stałym promieniu. Przy zderzeniu tworzona jest eksplozja, a pozycja statku oraz jego prędkość są resetowane do wartości początkowych (centrum ekranu, wektor zerowy). Gra nie kończy się – gracz może kontynuować rozgrywkę. A także jak wspomniano wcześniej ograniczo o liczbę pocisków do 4.
+- fale asteroid – po zniszczeniu wszystkich pojawia się nowa, trudniejsza fala; numer fali widoczny na HUD, wynik nie jest resetowany,
 
 ### Uruchomienie
 
-1. Skopiuj katalog z kodem `lab_07`.
+1. Skopiuj katalog z kodem `lab_08`.
 2. Upewnij się, że posiadasz środowisko z Pythonem oraz zainstalowaną bibliotekę raylib (moduł `pyray`) oraz standardowe biblioteki `math` i `random`.
-3. Uruchom projekt z poziomu IDE lub wykonaj w katalogu `lab_07` polecenie:
+3. Uruchom projekt z poziomu IDE lub wykonaj w katalogu `lab_08` polecenie:
 
 ```bash
 python main.py
@@ -31,9 +25,12 @@ python main.py
 
 ### Sterowanie
 
-| Klawisz    | Akcja        |
-| ---------- | ------------ |
-| `←` / `→`  | Obrót statku |
-| `↑`        | Ciąg silnika |
-| `Z`        | Hamowanie    |
-| `SPACEBAR` | Strzał       |
+| Klawisz              | Akcja        |
+| -------------------- | ------------ |
+| `←` / `→`            | Obrót statku |
+| `↑`                  | Ciąg silnika |
+| `Z`                  | Hamowanie    |
+| `SPACEBAR`           | Strzał       |
+| `R`                  | Restart      |
+| `Enter` / `SPACEBAR` | Start gr     |
+
