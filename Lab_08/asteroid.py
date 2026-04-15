@@ -4,49 +4,52 @@ import pyray as rl
 from config import (
     ASTEROID_NUM_VERTS,
     ASTEROID_RADIUS_JITTER,
-    ASTEROID_BASE_SPEED_MIN,
-    ASTEROID_BASE_SPEED_DIV,
     ASTEROID_ROT_SPEED_MIN,
     ASTEROID_ROT_SPEED_MAX,
+    ASTEROID_LEVELS,
+    ASTEROID_FILL_COLOR_RGBA,
+    ASTEROID_LINE_COLOR_RGBA,
 )
-from utils import SCREEN_W, SCREEN_H, ghost_positions
-
-
-# Funkcja pomocnicza do obracania punktu o dany kąt
-def rotate_point(x: float, y: float, angle: float) -> tuple[float, float]:
-    cos_a = math.cos(angle)
-    sin_a = math.sin(angle)
-    return (x * cos_a - y * sin_a, x * sin_a + y * cos_a)
+from utils import SCREEN_W, SCREEN_H, ghost_positions, rotate_point
 
 
 class Asteroid:
-    def __init__(self, x: float, y: float, radius: float):
+    def __init__(self, x: float, y: float, level: int = 3):
         self.x = float(x)
         self.y = float(y)
-        self.radius = float(radius)
+        self.level = level
         self.alive = True
 
-        # Większe asteroidy poruszają się wolniej
-        base_speed = max(ASTEROID_BASE_SPEED_MIN, ASTEROID_BASE_SPEED_DIV / radius)
-        angle = random.uniform(0, 2 * math.pi)
-        self.vx = math.cos(angle) * base_speed
-        self.vy = math.sin(angle) * base_speed
+        # Pobieranie parametrów poziomu
+        level_params = ASTEROID_LEVELS.get(level, ASTEROID_LEVELS[3])
+        min_radius, max_radius, min_speed, max_speed = level_params
 
-        # Losowa prędkość kątowa
-        self.rot_speed = random.uniform(ASTEROID_ROT_SPEED_MIN, ASTEROID_ROT_SPEED_MAX)
+        # Inicjalizacja fizyki
+        self.radius = float(random.uniform(min_radius, max_radius))
         self.angle = random.uniform(0, 2 * math.pi)
+        self.rot_speed = random.uniform(ASTEROID_ROT_SPEED_MIN, ASTEROID_ROT_SPEED_MAX)
 
-        # Proceduralne wierzchołki asteroidy
+        move_speed = random.uniform(min_speed, max_speed)
+        move_direction = random.uniform(0, 2 * math.pi)
+        self.vx = math.cos(move_direction) * move_speed
+        self.vy = math.sin(move_direction) * move_speed
+
         self._local_verts = self._generate_verts()
+
+    def split(self) -> list["Asteroid"]:
+        if self.level <= 1:
+            return []
+        return [Asteroid(self.x, self.y, self.level - 1) for _ in range(2)]
 
     def _generate_verts(self) -> list[tuple[float, float]]:
         verts = []
         for i in range(ASTEROID_NUM_VERTS):
             base_angle = (2 * math.pi * i) / ASTEROID_NUM_VERTS
-            r = self.radius * random.uniform(
+            jitter = random.uniform(
                 1.0 - ASTEROID_RADIUS_JITTER, 1.0 + ASTEROID_RADIUS_JITTER
             )
-            verts.append((math.cos(base_angle) * r, math.sin(base_angle) * r))
+            dist = self.radius * jitter
+            verts.append((math.cos(base_angle) * dist, math.sin(base_angle) * dist))
         return verts
 
     def update(self, dt: float) -> None:
@@ -60,25 +63,33 @@ class Asteroid:
         self.y %= SCREEN_H
 
     def draw(self) -> None:
-        for px, py in ghost_positions(self.x, self.y, self.radius):
-            self._draw_at(px, py)
+        for ghost_x, ghost_y in ghost_positions(self.x, self.y, self.radius):
+            self._draw_at(ghost_x, ghost_y)
 
-    def _draw_at(self, cx: float, cy: float) -> None:
-        world = []
-        for lx, ly in self._local_verts:
-            rx, ry = rotate_point(lx, ly, self.angle)
-            world.append((cx + rx, cy + ry))
+    def _draw_at(self, center_x: float, center_y: float) -> None:
+        world_verts = []
+        for local_x, local_y in self._local_verts:
+            rx, ry = rotate_point(local_x, local_y, self.angle)
+            world_verts.append(rl.Vector2(center_x + rx, center_y + ry))
 
-        n = len(world)
-        fill_color = rl.Color(60, 60, 60, 255)
-        center = rl.Vector2(cx, cy)
+        self._render_asteroid_shape(center_x, center_y, world_verts)
 
-        for i in range(n):
-            v1 = rl.Vector2(*world[i])
-            v2 = rl.Vector2(*world[(i + 1) % n])
-            rl.draw_triangle(center, v2, v1, fill_color)
+    def _render_asteroid_shape(
+        self, cx: float, cy: float, verts: list[rl.Vector2]
+    ) -> None:
+        num_verts = len(verts)
+        center_vec = rl.Vector2(cx, cy)
 
-        for i in range(n):
-            x1, y1 = world[i]
-            x2, y2 = world[(i + 1) % n]
-            rl.draw_line(int(x1), int(y1), int(x2), int(y2), rl.GRAY)
+        # Konwersja list z configu na obiekty Color Rayliba
+        fill_color = rl.Color(*ASTEROID_FILL_COLOR_RGBA)
+        line_color = rl.Color(*ASTEROID_LINE_COLOR_RGBA)
+
+        # Rysowanie wypełnienia
+        for i in range(num_verts):
+            v1 = verts[i]
+            v2 = verts[(i + 1) % num_verts]
+            rl.draw_triangle(center_vec, v2, v1, fill_color)
+
+        # Rysowanie krawędzi
+        for i in range(num_verts):
+            rl.draw_line_v(verts[i], verts[(i + 1) % num_verts], line_color)
