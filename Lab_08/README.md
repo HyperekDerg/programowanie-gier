@@ -32,5 +32,5 @@ python main.py
 | `Z`                  | Hamowanie    |
 | `SPACEBAR`           | Strzał       |
 | `R`                  | Restart      |
-| `Enter` / `SPACEBAR` | Start gr     |
+| `ENTER` / `SPACEBAR` | Start gr     |
 
