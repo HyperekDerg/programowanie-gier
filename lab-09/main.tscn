@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b3hog1xxl7e3w"]
 
 [ext_resource type="Script" uid="uid://cols1g6nfvo8m" path="res://path_follow_3d.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cqbng5bx52f3i" path="res://mesh_instance_3d.gd" id="2_0xm2m"]
 
 [sub_resource type="Curve3D" id="Curve3D_7dm0k"]
 _data = {
@@ -25,6 +26,8 @@ rail_speed = 0.08
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D" unique_id=1922788686]
 mesh = SubResource("BoxMesh_7dm0k")
+script = ExtResource("2_0xm2m")
+LIMIT_X = 1.5
 
-[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D/MeshInstance3D" unique_id=1074357202]
+[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D" unique_id=1074357202]
 transform = Transform3D(1, 0, 0, 0, 0.9388601, 0.34429884, 0, -0.34429884, 0.9388601, 0, 0.9540341, 1.6579523)
