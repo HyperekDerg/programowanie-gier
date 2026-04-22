@@ -1,0 +1,10 @@
+certifi==2026.2.25
+cffi==2.0.0
+charset-normalizer==3.4.7
+idna==3.12
+numpy==2.4.4
+pycparser==3.0
+pyray==0.1.0
+raylib==5.5.0.4
+requests==2.33.1
+urllib3==2.6.3
