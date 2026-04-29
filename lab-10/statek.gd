@@ -8,19 +8,26 @@ extends MeshInstance3D
 @export var shoot_cooldown_time: float = 0.3
 var _shoot_cooldown: float = 0.0
 
+const MAX_BULLETS := 5
+var active_bullets: Array = []
+
 
 func _ready() -> void:
 	set_process(true)
 	set_process_input(true)
 
+
 func _process(delta: float) -> void:
 	if _shoot_cooldown > 0.0:
 		_shoot_cooldown -= delta
 
-	if Input.is_action_just_pressed("ui_accept") and _shoot_cooldown <= 0.0:
+	if Input.is_action_just_pressed("ui_accept") \
+	and _shoot_cooldown <= 0.0 \
+	and active_bullets.size() < MAX_BULLETS:
+
 		_shoot_cooldown = shoot_cooldown_time
 		_shoot()
-		
+
 	var input_vector := Vector2.ZERO
 
 	if Input.is_action_pressed("ui_left"):
@@ -45,3 +52,9 @@ func _shoot() -> void:
 	var bullet = bullet_scene.instantiate()
 	get_tree().root.add_child(bullet)
 	bullet.global_position = global_position
+
+	active_bullets.append(bullet)
+
+	bullet.tree_exited.connect(func():
+		active_bullets.erase(bullet)
+	)

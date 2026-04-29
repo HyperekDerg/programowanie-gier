@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cols1g6nfvo8m" path="res://path_follow_3d.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://bimg55q1wotqc" path="res://main.gd" id="1_lquwl"]
-[ext_resource type="Script" uid="uid://cqbng5bx52f3i" path="res://mesh_instance_3d.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://cqbng5bx52f3i" path="res://statek.gd" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bxbm4ydxko8a4" path="res://bullet.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://wyhhcal4twg1" path="res://target.tscn" id="4_1bvp3"]
 
