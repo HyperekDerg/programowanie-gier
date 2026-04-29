@@ -7,4 +7,8 @@ func _ready():
 
 func _on_hit(_area: Area3D):
 	print("trafiony!")
+
+	var main = get_tree().current_scene
+	main.add_score()
+
 	queue_free()

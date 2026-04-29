@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b3hog1xxl7e3w"]
 
 [ext_resource type="Script" uid="uid://cols1g6nfvo8m" path="res://path_follow_3d.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bimg55q1wotqc" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Script" uid="uid://cqbng5bx52f3i" path="res://mesh_instance_3d.gd" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bxbm4ydxko8a4" path="res://bullet.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://wyhhcal4twg1" path="res://target.tscn" id="4_1bvp3"]
@@ -17,9 +18,16 @@ point_count = 4
 [sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
 size = Vector3(1.05, 1.05, 1.05)
 
-[node name="Node3D" type="Node3D" unique_id=1007724670]
+[sub_resource type="LabelSettings" id="LabelSettings_lquwl"]
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 7
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1574038838]
+[node name="Node3D" type="Node3D" unique_id=1007724670]
+script = ExtResource("1_lquwl")
+
+[node name="Oświetlenie" type="DirectionalLight3D" parent="." unique_id=1574038838]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.9873853, 0)
 
 [node name="Path3D" type="Path3D" parent="." unique_id=166902480]
@@ -44,6 +52,16 @@ bullet_scene = ExtResource("3_1bvp3")
 
 [node name="Kolizja" type="CollisionShape3D" parent="Path3D/PathFollow3D/Statek" unique_id=12803665]
 shape = SubResource("BoxShape3D_0xm2m")
+
+[node name="HUD" type="CanvasLayer" parent="Path3D/PathFollow3D" unique_id=1256840407]
+offset = Vector2(20, 20)
+transform = Transform2D(1, 0, 0, 1, 20, 20)
+
+[node name="Wynik" type="Label" parent="Path3D/PathFollow3D/HUD" unique_id=976788937]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_lquwl")
 
 [node name="Target" parent="." unique_id=332631488 instance=ExtResource("4_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.98596907, 0, -11.080335)
