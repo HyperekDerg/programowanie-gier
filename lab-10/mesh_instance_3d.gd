@@ -4,11 +4,23 @@ extends MeshInstance3D
 @export var LIMIT_X: float = 2.0
 @export var LIMIT_Y: float = 1.0
 
+@export var bullet_scene: PackedScene
+@export var shoot_cooldown_time: float = 0.3
+var _shoot_cooldown: float = 0.0
+
+
 func _ready() -> void:
 	set_process(true)
 	set_process_input(true)
 
 func _process(delta: float) -> void:
+	if _shoot_cooldown > 0.0:
+		_shoot_cooldown -= delta
+
+	if Input.is_action_just_pressed("ui_accept") and _shoot_cooldown <= 0.0:
+		_shoot_cooldown = shoot_cooldown_time
+		_shoot()
+		
 	var input_vector := Vector2.ZERO
 
 	if Input.is_action_pressed("ui_left"):
@@ -27,3 +39,9 @@ func _process(delta: float) -> void:
 	position.y += input_vector.y * move_speed * delta
 	position.x = clamp(position.x, -LIMIT_X, LIMIT_X)
 	position.y = clamp(position.y, -LIMIT_Y, LIMIT_Y)
+
+
+func _shoot() -> void:
+	var bullet = bullet_scene.instantiate()
+	get_tree().root.add_child(bullet)
+	bullet.global_position = global_position

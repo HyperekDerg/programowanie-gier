@@ -9,6 +9,7 @@ radius = 0.16
 
 [node name="Bullet" type="Node3D" unique_id=1952988726]
 script = ExtResource("1_v7oki")
+lifetime = 1.0
 
 [node name="Area3D" type="Area3D" parent="." unique_id=436859272]
 collision_layer = 4
