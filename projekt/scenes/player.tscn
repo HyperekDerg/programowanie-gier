@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7gveada5uasu"]
 
 [ext_resource type="Texture2D" uid="uid://cefpeho7il8h5" path="res://assets/DinoSprites - tard.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://dycs62jcns0l5" path="res://scripts/player.gd" id="1_g2els"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -41,14 +42,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fjrip"]
 size = Vector2(13, 16)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=490913192]
+[node name="Player" type="CharacterBody2D" unique_id=490913192]
+script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=757470163]
 position = Vector2(0, -9)
 sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.8525683
+frame_progress = 0.08676144
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1523464563]
 position = Vector2(-0.5, -8)
