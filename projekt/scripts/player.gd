@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export_group("Movement")
 @export var speed: float = 140.0
 @export var run_speed: float = 220.0
+@export var crouch_speed: float = 25.0 
 @export var acceleration: float = 400.0
 @export var friction: float = 600.0
 
@@ -14,7 +15,11 @@ extends CharacterBody2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var death_timer: Timer = $DeathTimer
 
+@onready var collider_stand = $CollisionShape2D
+@onready var collider_crouch = $CollisionShape2D_Crouch
+
 var dead: bool = false
+var crouching: bool = false
 
 
 func _physics_process(delta: float) -> void:
@@ -27,9 +32,9 @@ func _physics_process(delta: float) -> void:
 	# Apply Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
-
+		
 	# Handle Jumping
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and not crouching:
 		velocity.y = jump_velocity
 
 	# Handle Horizontal Movement
@@ -40,11 +45,18 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("ui_shift") and is_on_floor():
 		current_speed = run_speed
 
-	# Flip sprite
-	if direction > 0:
-		animated_sprite.flip_h = false
-	elif direction < 0:
-		animated_sprite.flip_h = true
+	# Crouch
+	if Input.is_action_pressed("ui_down") and is_on_floor():
+		crouching = true
+		collider_stand.set_deferred("disabled", true)
+		collider_crouch.set_deferred("disabled", false)
+
+		# set speed of crouch-walk
+		current_speed = crouch_speed
+	else:
+		crouching = false
+		collider_stand.set_deferred("disabled", false)
+		collider_crouch.set_deferred("disabled", true)
 
 	# Acceleration / Friction
 	if direction != 0:
@@ -52,17 +64,34 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 
+	# Flip sprite
+	if direction > 0:
+		animated_sprite.flip_h = false
+	elif direction < 0:
+		animated_sprite.flip_h = true
+
 	# Animations
-	if not is_on_floor():
-		animated_sprite.play("Jump")
-	else:
+	if crouching and is_on_floor():
+		animated_sprite.play("Crouch")
+
 		if direction == 0:
-			animated_sprite.play("Idle")
+			animated_sprite.speed_scale = 0
+			animated_sprite.frame = 0
 		else:
-			if current_speed == run_speed:
-				animated_sprite.play("Run")
+			animated_sprite.speed_scale = 0.8
+	else:
+		animated_sprite.speed_scale = 1.0
+
+		if not is_on_floor():
+			animated_sprite.play("Jump")
+		else:
+			if direction == 0:
+				animated_sprite.play("Idle")
 			else:
-				animated_sprite.play("Walk")
+				if current_speed == run_speed:
+					animated_sprite.play("Run")
+				else:
+					animated_sprite.play("Walk")
 
 	move_and_slide()
 
@@ -72,20 +101,12 @@ func die() -> void:
 		return
 
 	dead = true
-
-	# Stop movement
 	velocity = Vector2.ZERO
 
-	# Disable collision safely
 	$CollisionShape2D.set_deferred("disabled", true)
-
-	# Play death animation
 	animated_sprite.play("Death")
 
-	# Mario jump
 	velocity.y = -300
-
-	# Restart timer
 	death_timer.start()
 
 

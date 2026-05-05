@@ -2,6 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://cefpeho7il8h5" path="res://assets/DinoSprites - tard.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dycs62jcns0l5" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://byhb51ws150pm" path="res://assets/DinoSprites - tard - crouch-walk.png" id="2_qhqgy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke2ow"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31cv2"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqfne"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(120, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
 atlas = ExtResource("1_3vyb7")
@@ -97,6 +110,20 @@ region = Rect2(216, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tuyoq"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ke2ow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31cv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqfne")
+}],
+"loop": true,
+"name": &"Crouch",
+"speed": 4.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jej6c")
@@ -196,6 +223,10 @@ animations = [{
 radius = 5.0
 height = 18.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ujl30"]
+radius = 5.0
+height = 14.0
+
 [node name="Player" type="CharacterBody2D" unique_id=490913192]
 collision_layer = 2
 script = ExtResource("1_g2els")
@@ -203,13 +234,17 @@ script = ExtResource("1_g2els")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=757470163]
 position = Vector2(0, -9)
 sprite_frames = SubResource("SpriteFrames_tuyoq")
-animation = &"Death"
+animation = &"Crouch"
 autoplay = "Idle"
-frame_progress = 0.16447549
+frame_progress = 0.40591264
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1523464563]
 position = Vector2(-1, -9)
 shape = SubResource("CapsuleShape2D_g2els")
+
+[node name="CollisionShape2D_Crouch" type="CollisionShape2D" parent="." unique_id=744387317]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_ujl30")
 
 [node name="DeathTimer" type="Timer" parent="." unique_id=1357312368]
 one_shot = true
