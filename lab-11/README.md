@@ -1,18 +1,30 @@
-# Lab 10 – Strzelanie 3D w Godot
+# Laboratorium 11
 
+## Opis
 
-## Wykonane zadania
+Laboratorium polegało na rozbudowie projektu gry o system przeciwników, pocisków i fal spawnu. Wykonano wszystkie polecenia opisane w instrukcji.
 
-Stworzyłem osobną scenę dla pocisku jako `Area3D` z prostym modelem zastępczym. Pocisk sam się porusza do przodu i po określonym czasie usuwa się ze sceny, żeby nie zaśmiecać drzewa węzłów.
+## Zrealizowane zadania
 
-Skonfigurowałem warstwy kolizji tak, żeby pociski nie wchodziły w interakcję ze statkiem gracza ani ze sobą nawzajem — trafiają tylko w warstwę zarezerwowaną dla wrogów/celów.
+### Scena przeciwnika
+Utworzono nową scenę `enemy`, do której przypisano prosty model przeciwników. Wszystkie warstwy kolizji zostały ustawione zgodnie z zaleceniami instrukcji.
 
-Do skryptu statku dodałem logikę strzelania z cooldownem, żeby trzymanie klawisza nie generowało setek pocisków na sekundę. Pocisk jest instancjonowany i dodawany bezpośrednio do `root` sceny — nie jako dziecko `PathFollow3D`, bo wtedy leciałby razem z torem, a nie niezależnie.
+### Skrypty
+Napisano nowe skrypty oraz zmodyfikowano istniejące w celu poprawy czytelności kodu. Skorzystano z zewnętrznego formattera, który automatycznie wykonuje reorder funkcji.
 
-Stworzyłem też scenę celu, który reaguje na wejście pocisku przez sygnał `area_entered` podłączony z kodu w `_ready()`, po czym usuwa się ze sceny. Kilka instancji rozstawiłem w `main.tscn` przed kamerą.
+### Ruch przeciwników
+Przeciwnicy poruszają się z wykorzystaniem **Tween** oraz **Z distance** — nacierają na gracza i zawracają aż do ustalonej odległości, po czym są usuwani ze sceny.
 
-Na końcu dorzuciłem prostą zmienną `score` zwiększaną przy każdym trafieniu — wynik wyświetlam na warstwie graficznej jako element prostego HUD'u.
+### Wspólna scena pocisku
+Zarówno gracz, jak i przeciwnicy korzystają z jednej wspólnej sceny `bullet`. Scena przyjmuje parametr określający typ rodzica:
+- `player` — pocisk gracza
+- `enemy` — pocisk przeciwnika
 
-### Zadanie dodatkowe
+Na podstawie tego parametru w skrypcie `bullet` przypisywane są odpowiednie warstwy kolizji.
 
-Ograniczyłem liczbę jednocześnie aktywnych pocisków do 5. Trzymam je w tablicy w skrypcie głównym i przed każdym strzałem odfiltrowuję martwe instancje. Jeśli tablica jest pełna — strzał jest blokowany.
+### Spawner fal
+Spawner fal działa zgodnie z założonym wzorcem. Przeciwnicy nie dążą do identycznego punktu startowego — ich pozycje są zróżnicowane.
+
+### Mechaniki walki
+- Gracz może strzelać oraz taranować przeciwników.
+- Przeciwnicy mogą strzelać
