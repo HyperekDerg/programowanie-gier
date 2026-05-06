@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cefpeho7il8h5" path="res://assets/DinoSprites - tard.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dycs62jcns0l5" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://byhb51ws150pm" path="res://assets/DinoSprites - tard - crouch-walk.png" id="2_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://dw4c104tfcqbn" path="res://assets/sounds/sonicded.mp3" id="4_dqkch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ke2ow"]
 atlas = ExtResource("2_qhqgy")
@@ -245,6 +246,11 @@ shape = SubResource("CapsuleShape2D_g2els")
 [node name="CollisionShape2D_Crouch" type="CollisionShape2D" parent="." unique_id=744387317]
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_ujl30")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1402661113]
+stream = ExtResource("4_dqkch")
+volume_db = 10.0
+bus = &"SFX"
 
 [node name="DeathTimer" type="Timer" parent="." unique_id=1357312368]
 one_shot = true

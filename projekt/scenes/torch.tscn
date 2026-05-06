@@ -73,3 +73,5 @@ shape = SubResource("CircleShape2D_my26j")
 disabled = true
 
 [node name="ScreenNotifier" type="VisibleOnScreenEnabler2D" parent="." unique_id=836977409]
+position = Vector2(-18, 18)
+rect = Rect2(-10, -46, 56, 56)

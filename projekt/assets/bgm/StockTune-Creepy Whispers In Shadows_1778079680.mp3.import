@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bv0xs8vvt6cmn"
+path="res://.godot/imported/StockTune-Creepy Whispers In Shadows_1778079680.mp3-5489c761537555630770ffa5f149132b.mp3str"
+
+[deps]
+
+source_file="res://assets/bgm/StockTune-Creepy Whispers In Shadows_1778079680.mp3"
+dest_files=["res://.godot/imported/StockTune-Creepy Whispers In Shadows_1778079680.mp3-5489c761537555630770ffa5f149132b.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

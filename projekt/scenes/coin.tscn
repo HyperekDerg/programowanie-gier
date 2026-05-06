@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bs4ltawx3idio" path="res://scripts/coin.gd" id="1_i64fm"]
 [ext_resource type="Texture2D" uid="uid://bwspaaj2wvnp2" path="res://assets/tiles/monochrome_tilemap_transparent_packed.png" id="1_rwqht"]
+[ext_resource type="AudioStream" uid="uid://cf8kt3vsr783a" path="res://assets/sounds/magic-coins.mp3" id="3_11l1o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i64fm"]
 atlas = ExtResource("1_rwqht")
@@ -63,5 +64,10 @@ position = Vector2(-3.8146973e-06, 0)
 scale = Vector2(0.7753906, 0.7867125)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_i64fm")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=945453407]
+stream = ExtResource("3_11l1o")
+volume_db = 4.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

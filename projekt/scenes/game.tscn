@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://d0mwd0d8odydg"]
 
+[ext_resource type="Script" uid="uid://c41ksbw6er314" path="res://scripts/game.gd" id="1_gee14"]
 [ext_resource type="PackedScene" uid="uid://7gveada5uasu" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://daglfv2ih4u1w" path="res://scenes/torch.tscn" id="2_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bwspaaj2wvnp2" path="res://assets/tiles/monochrome_tilemap_transparent_packed.png" id="2_yqjtg"]
@@ -968,6 +969,7 @@ glow_bloom = 0.25
 glow_blend_mode = 0
 
 [node name="Game" type="Node2D" unique_id=2082430835]
+script = ExtResource("1_gee14")
 
 [node name="WorldGen" type="Node" parent="." unique_id=1226390073]
 

@@ -1,7 +1,7 @@
 extends Node
 
 const FLICKER_SPEED := 1.5
-const BASE_DB := 6
+const BASE_DB := 3
 const FLICKER_DB := 1.5
 const PITCH_VARIATION := 0.03
 
