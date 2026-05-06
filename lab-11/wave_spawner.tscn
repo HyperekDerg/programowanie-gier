@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bxlxe8eaghvjl"]
+
+[ext_resource type="Script" uid="uid://cn0bvdbqgiaru" path="res://wave_spawner.gd" id="1_ryks6"]
+
+[node name="WaveSpawner" type="Node3D" unique_id=403420868]
+script = ExtResource("1_ryks6")

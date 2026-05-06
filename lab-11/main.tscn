@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://b3hog1xxl7e3w"]
+
+[ext_resource type="Script" uid="uid://cols1g6nfvo8m" path="res://path_follow_3d.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bimg55q1wotqc" path="res://main.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://cqbng5bx52f3i" path="res://statek.gd" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bxbm4ydxko8a4" path="res://bullet.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://wyhhcal4twg1" path="res://target.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bxlxe8eaghvjl" path="res://wave_spawner.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bnl3dcfnyi1tv" path="res://enemy.tscn" id="7_272bh"]
+
+[sub_resource type="Curve3D" id="Curve3D_7dm0k"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0, 0, -30, 0, 0, 0, 0, 0, 0, 0, 0, -50),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+size = Vector3(1.05, 1.05, 1.05)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lquwl"]
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 7
+
+[node name="Node3D" type="Node3D" unique_id=1007724670]
+script = ExtResource("1_lquwl")
+
+[node name="Oświetlenie" type="DirectionalLight3D" parent="." unique_id=1574038838]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.9873853, 0)
+
+[node name="Path3D" type="Path3D" parent="." unique_id=166902480]
+curve = SubResource("Curve3D_7dm0k")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D" unique_id=1880024764]
+script = ExtResource("1_ig7tw")
+rail_speed = 0.08
+
+[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D" unique_id=1074357202]
+transform = Transform3D(1, 0, 0, 0, 0.9388601, 0.34429884, 0, -0.34429884, 0.9388601, 0, 0.9540341, 1.6579523)
+
+[node name="Player" type="Area3D" parent="Path3D/PathFollow3D" unique_id=434621165]
+disable_mode = 2
+collision_mask = 10
+
+[node name="Mesh" type="MeshInstance3D" parent="Path3D/PathFollow3D/Player" unique_id=1922788686]
+mesh = SubResource("BoxMesh_7dm0k")
+script = ExtResource("2_0xm2m")
+LIMIT_Y = 1.5
+bullet_scene = ExtResource("3_1bvp3")
+
+[node name="Kolizja" type="CollisionShape3D" parent="Path3D/PathFollow3D/Player" unique_id=12803665]
+shape = SubResource("BoxShape3D_0xm2m")
+
+[node name="HUD" type="CanvasLayer" parent="Path3D/PathFollow3D" unique_id=1256840407]
+offset = Vector2(20, 20)
+transform = Transform2D(1, 0, 0, 1, 20, 20)
+
+[node name="Wynik" type="Label" parent="Path3D/PathFollow3D/HUD" unique_id=976788937]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_lquwl")
+
+[node name="Target" parent="." unique_id=332631488 instance=ExtResource("4_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.98596907, 0, -11.080335)
+
+[node name="Target2" parent="." unique_id=812574674 instance=ExtResource("4_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8611345, 0, -22.16067)
+
+[node name="WaveSpawner" parent="." unique_id=1034457271 node_paths=PackedStringArray("path_follow") instance=ExtResource("6_7mycd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -73.79048)
+enemy_scene = ExtResource("7_272bh")
+path_follow = NodePath("../Path3D/PathFollow3D")
+bullet_scene = ExtResource("3_1bvp3")
