@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://daglfv2ih4u1w"]
+
+[ext_resource type="Script" uid="uid://dn4kg8umdigvc" path="res://scenes/torch.gd" id="1_my26j"]
+[ext_resource type="Texture2D" uid="uid://du4m7ollc42w5" path="res://assets/torch - animated.png" id="3_o2tjn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3k50"]
+atlas = ExtResource("3_o2tjn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndh0a"]
+atlas = ExtResource("3_o2tjn")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktql7"]
+atlas = ExtResource("3_o2tjn")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gybtl"]
+atlas = ExtResource("3_o2tjn")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_21l5o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3k50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndh0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktql7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gybtl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_iywne"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.54086536, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.4489865, 0.4489865, 0.4489865, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d4v33"]
+gradient = SubResource("Gradient_iywne")
+fill = 1
+fill_from = Vector2(0.5260417, 0.5)
+fill_to = Vector2(0.4392361, 0.1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_my26j"]
+radius = 2.0
+
+[node name="Torch" type="AnimatableBody2D" unique_id=872342053]
+script = ExtResource("1_my26j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2139159966]
+sprite_frames = SubResource("SpriteFrames_21l5o")
+autoplay = "default"
+frame_progress = 0.22497584
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1564901226]
+position = Vector2(0, -3)
+scale = Vector2(1.8007813, 1.667175)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_d4v33")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=659465594]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_my26j")
+disabled = true

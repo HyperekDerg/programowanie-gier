@@ -35,6 +35,17 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_wnlwo"]
 radius = 5.0
 
+[sub_resource type="Gradient" id="Gradient_iywne"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.54086536, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.4489865, 0.4489865, 0.4489865, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i64fm"]
+gradient = SubResource("Gradient_iywne")
+fill = 1
+fill_from = Vector2(0.5260417, 0.5)
+fill_to = Vector2(0.4392361, 0.1)
+
 [node name="Coin" type="Area2D" unique_id=372479038]
 collision_mask = 2
 script = ExtResource("1_i64fm")
@@ -46,5 +57,11 @@ frame_progress = 0.86050093
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=682775208]
 shape = SubResource("CircleShape2D_wnlwo")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1985490858]
+position = Vector2(-3.8146973e-06, 0)
+scale = Vector2(0.7753906, 0.7867125)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_i64fm")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
