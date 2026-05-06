@@ -1,25 +1,23 @@
 extends CharacterBody2D
-
 ## Player Movement Settings
+
 @export_group("Movement")
 @export var speed: float = 140.0
 @export var run_speed: float = 220.0
-@export var crouch_speed: float = 25.0 
+@export var crouch_speed: float = 25.0
 @export var acceleration: float = 400.0
 @export var friction: float = 600.0
-
 @export_group("Jump")
 @export var jump_velocity: float = -250.0
 @export var gravity_scale: float = 1.0
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var death_timer: Timer = $DeathTimer
-
-@onready var collider_stand = $CollisionShape2D
-@onready var collider_crouch = $CollisionShape2D_Crouch
-
 var dead: bool = false
 var crouching: bool = false
+
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var death_timer: Timer = $DeathTimer
+@onready var collider_stand = $CollisionShape2D
+@onready var collider_crouch = $CollisionShape2D_Crouch
 
 
 func _physics_process(delta: float) -> void:
@@ -32,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	# Apply Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
-		
+
 	# Handle Jumping
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and not crouching:
 		velocity.y = jump_velocity

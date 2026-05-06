@@ -442,13 +442,13 @@ size = Vector2(80, 10)
 distance = -34.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
-size = Vector2(32, 7.5)
+size = Vector2(30, 8.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iywne"]
 size = Vector2(8, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gee14"]
-size = Vector2(32, 7.75)
+size = Vector2(30, 8.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dinhu"]
 size = Vector2(48, 7)
@@ -602,7 +602,7 @@ position = Vector2(557, 116)
 time = 0.3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZones/KillZone7" unique_id=146583586]
-position = Vector2(1, 9.75)
+position = Vector2(2, 9.25)
 shape = SubResource("RectangleShape2D_lbhrr")
 
 [node name="KillZone6" parent="KillZones" unique_id=20863541 instance=ExtResource("4_lbhrr")]
@@ -616,7 +616,7 @@ shape = SubResource("RectangleShape2D_iywne")
 position = Vector2(1003, 61)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZones/KillZone5" unique_id=43474098]
-position = Vector2(19, 0.875)
+position = Vector2(20, 0.375)
 shape = SubResource("RectangleShape2D_gee14")
 
 [node name="KillZone4" parent="KillZones" unique_id=2081191026 instance=ExtResource("4_lbhrr")]
