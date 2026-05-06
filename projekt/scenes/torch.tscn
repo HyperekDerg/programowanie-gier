@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://daglfv2ih4u1w"]
 
-[ext_resource type="Script" uid="uid://dn4kg8umdigvc" path="res://scenes/torch.gd" id="1_my26j"]
+[ext_resource type="Script" uid="uid://dn4kg8umdigvc" path="res://scripts/torch.gd" id="1_my26j"]
 [ext_resource type="Texture2D" uid="uid://du4m7ollc42w5" path="res://assets/torch - animated.png" id="3_o2tjn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r3k50"]
@@ -59,7 +59,7 @@ script = ExtResource("1_my26j")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2139159966]
 sprite_frames = SubResource("SpriteFrames_21l5o")
 autoplay = "default"
-frame_progress = 0.22497584
+frame_progress = 0.08233673
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1564901226]
 position = Vector2(0, -3)
@@ -71,3 +71,5 @@ texture = SubResource("GradientTexture2D_d4v33")
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_my26j")
 disabled = true
+
+[node name="ScreenNotifier" type="VisibleOnScreenEnabler2D" parent="." unique_id=836977409]

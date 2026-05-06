@@ -15,6 +15,14 @@ run/main_scene="uid://d0mwd0d8odydg"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://b2myibcr3h4c"
+
+[autoload]
+
+TorchAudioManager="*uid://c14u3uwfbr521"
+
 [input]
 
 ui_shift={
