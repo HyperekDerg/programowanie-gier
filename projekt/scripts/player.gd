@@ -44,6 +44,7 @@ func _set_walking_audio(walking: bool) -> void:
 	_was_walking = walking
 	if walking:
 		sfx.stream = SFX_STEP
+		sfx.volume_db = 10.0
 		sfx.play()
 	else:
 		sfx.stop()
