@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Projekt"
-run/main_scene="uid://d0mwd0d8odydg"
+run/main_scene="uid://2tmeogccsw7l"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,13 @@ buses/default_bus_layout="uid://b2myibcr3h4c"
 [autoload]
 
 TorchAudioManager="*uid://c14u3uwfbr521"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+window/stretch/mode="viewport"
 
 [input]
 
