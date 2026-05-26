@@ -23,9 +23,9 @@ func _ready() -> void:
 	add_child(_sfx_hit)
 	add_child(_sfx_game_over)
 	
-	_sfx_score.stream = preload("res://score.mp3")
-	_sfx_hit.stream = preload("res://hit.mp3")
-	_sfx_game_over.stream = preload("res://game_over.mp3")
+	_sfx_score.stream = preload("res://assets/audio/score.mp3")
+	_sfx_hit.stream = preload("res://assets/audio/hit.mp3")
+	_sfx_game_over.stream = preload("res://assets/audio/game_over.mp3")
 	
 	enemy_killed.connect(func(): _sfx_score.play())
 	player_damaged.connect(func(): _sfx_hit.play())
