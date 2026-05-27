@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://ddelpx2jqw660"]
+
+[ext_resource type="Script" uid="uid://bwqeprg7rl6ej" path="res://scripts/enemy.gd" id="1_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://bwspaaj2wvnp2" path="res://assets/tiles/monochrome_tilemap_transparent_packed.png" id="1_md0e3"]
+[ext_resource type="PackedScene" uid="uid://cont6tdshuvlh" path="res://scenes/kill_zone.tscn" id="2_4ra3w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ra3w"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(96, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5uy6h"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(96, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4w8v"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(96, 224, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwavj"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(96, 240, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_md484"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ra3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5uy6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4w8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwavj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ipns3"]
+size = Vector2(11, 7)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ra3w"]
+radius = 4.0
+height = 8.0
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1631101924]
+script = ExtResource("1_4ra3w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1983148998]
+sprite_frames = SubResource("SpriteFrames_md484")
+autoplay = "default"
+frame_progress = 0.4506318
+
+[node name="KillZone" parent="." unique_id=1673566150 instance=ExtResource("2_4ra3w")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=594345874]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_ipns3")
+
+[node name="VisionRay" type="RayCast2D" parent="." unique_id=1429006845]
+target_position = Vector2(150, 0)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1410738862]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_4ra3w")

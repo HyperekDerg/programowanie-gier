@@ -222,13 +222,13 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 5.0
-height = 18.0
+height = 18.2
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ujl30"]
 radius = 5.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D" unique_id=490913192]
+[node name="Player" type="CharacterBody2D" unique_id=490913192 groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_g2els")
 
