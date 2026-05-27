@@ -24,7 +24,6 @@ var _flicker_target: float = 1.0
 var _flicker_timer: float = 0.0
 
 @onready var start_button: Button = $MarginContainer/VBoxContainer/StartButton
-@onready var settings_button: Button = $MarginContainer/VBoxContainer/SettingsButton
 @onready var exit_button: Button = $MarginContainer/VBoxContainer/ExitButton
 @onready var fade_overlay: ColorRect = $FadeOverlay
 @onready var bgm_player: AudioStreamPlayer2D = $BGMPlayer
@@ -37,11 +36,10 @@ var _flicker_timer: float = 0.0
 
 func _ready() -> void:
 	start_button.pressed.connect(_on_start_pressed)
-	settings_button.pressed.connect(_on_settings_pressed)
 	exit_button.pressed.connect(_on_exit_pressed)
 	animation_player.animation_finished.connect(_on_animation_finished)
 
-	for btn in [start_button, settings_button, exit_button]:
+	for btn in [start_button, exit_button]:
 		btn.mouse_entered.connect(_on_button_hover.bind(btn))
 		btn.mouse_exited.connect(_on_button_unhover.bind(btn))
 		btn.focus_entered.connect(_on_button_hover.bind(btn))
@@ -229,5 +227,4 @@ func _fade_out_bgm() -> void:
 func _disable_buttons() -> void:
 	_stop_idle_pulse()
 	start_button.disabled = true
-	settings_button.disabled = true
 	exit_button.disabled = true
