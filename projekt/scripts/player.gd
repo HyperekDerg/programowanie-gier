@@ -10,13 +10,13 @@ extends CharacterBody2D
 @export_group("Jump")
 @export var jump_velocity: float = -250.0
 @export var gravity_scale: float = 1.0
-
 ## Audio Levels
 @export_group("Audio Levels (dB)")
 @export var volume_jump_db: float = -2.0
 @export var volume_death_db: float = 6.0
 
 var dead: bool = false
+var level_complete: bool = false
 var crouching: bool = false
 var _was_walking: bool = false
 var _jump_lock: float = 0.0
@@ -26,6 +26,8 @@ var _jump_lock: float = 0.0
 @onready var collider_stand = $CollisionShape2D
 @onready var collider_crouch = $CollisionShape2D_Crouch
 @onready var sfx: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var light_emitter: DirectionalLight2D = $DirectionalLight2D
+
 
 const SFX_STEP  = preload("res://assets/sounds/walk.mp3")
 const SFX_JUMP  = preload("res://assets/sounds/jump.mp3")
@@ -52,7 +54,8 @@ func _set_walking_audio(walking: bool) -> void:
 func _physics_process(delta: float) -> void:
 	if _jump_lock > 0.0:
 		_jump_lock -= delta
-	if dead:
+
+	if dead or level_complete:
 		velocity.y += get_gravity().y * delta
 		move_and_slide()
 		return
@@ -128,7 +131,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func die() -> void:
-	if dead:
+	if dead or level_complete:
 		return
 	dead = true
 	sfx.stop()
@@ -139,6 +142,16 @@ func die() -> void:
 	_play(SFX_DEATH, volume_death_db)
 	velocity.y = -300
 	death_timer.start()
+
+func complete_level() -> void:
+	if level_complete or dead:
+		return
+	level_complete = true
+	sfx.stop()
+	_was_walking = false
+	velocity.x = 0
+	var tween = create_tween()
+	tween.tween_property(light_emitter, "energy", 5.0, 1.5)
 
 func _on_DeathTimer_timeout() -> void:
 	get_tree().reload_current_scene()

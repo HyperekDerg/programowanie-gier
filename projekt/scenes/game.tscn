@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cont6tdshuvlh" path="res://scenes/kill_zone.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://yijtbgjj2wk4" path="res://scenes/platform.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://ddelpx2jqw660" path="res://scenes/enemy.tscn" id="9_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://dmxff4ydiafm" path="res://scenes/level_complete.tscn" id="10_vtaks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gee14"]
 texture = ExtResource("2_yqjtg")
@@ -1376,6 +1377,9 @@ glow_intensity = 0.6
 glow_bloom = 0.25
 glow_blend_mode = 0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvpfn"]
+size = Vector2(29, 17)
+
 [node name="Game" type="Node2D" unique_id=2082430835]
 script = ExtResource("1_gee14")
 
@@ -1438,7 +1442,7 @@ position = Vector2(2413, 41)
 
 [node name="Player" parent="." unique_id=490913192 instance=ExtResource("1_uwrxv")]
 z_index = 5
-position = Vector2(2341, 54)
+position = Vector2(56, -37)
 speed = 150.0
 acceleration = 300.0
 
@@ -1609,3 +1613,11 @@ position = Vector2(2675, 58)
 patrol_points = Array[Vector2]([Vector2(-320, 0), Vector2(0, 0)])
 move_speed = 55.0
 charge_speed = 115.0
+
+[node name="Level_complete" parent="." unique_id=1326500 instance=ExtResource("10_vtaks")]
+position = Vector2(3081, 186)
+next_scene = "res://scenes/demo_end.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level_complete" unique_id=956069242]
+position = Vector2(6.5, 1.5)
+shape = SubResource("RectangleShape2D_kvpfn")

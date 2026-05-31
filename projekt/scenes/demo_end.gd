@@ -3,7 +3,6 @@ extends Control
 const CURSOR_BLINK_INTERVAL: float = 0.5
 const IDLE_PULSE_DELAY: float = 3.0
 
-@export var game_scene_path: String = "res://scenes/game.tscn"
 @export var fade_duration: float = 0.6
 @export var bgm_volume_db: float = 0.0
 @export var flicker_min: float = 0.5
@@ -22,7 +21,6 @@ var _idle_tween: Tween = null
 var _flicker_target: float = 1.0
 var _flicker_timer: float = 0.0
 
-@onready var start_button: Button = $MarginContainer/VBoxContainer/StartButton
 @onready var exit_button: Button = $MarginContainer/VBoxContainer/ExitButton
 @onready var fade_overlay: ColorRect = $FadeOverlay
 @onready var bgm_player: AudioStreamPlayer2D = $BGMPlayer
@@ -34,11 +32,10 @@ var _flicker_timer: float = 0.0
 
 
 func _ready() -> void:
-	start_button.pressed.connect(_on_start_pressed)
 	exit_button.pressed.connect(_on_exit_pressed)
 	animation_player.animation_finished.connect(_on_animation_finished)
 
-	for btn in [start_button, exit_button]:
+	for btn in [exit_button]:
 		btn.mouse_entered.connect(_on_button_hover.bind(btn))
 		btn.mouse_exited.connect(_on_button_unhover.bind(btn))
 		btn.focus_entered.connect(_on_button_hover.bind(btn))
@@ -51,8 +48,6 @@ func _ready() -> void:
 	sfx_hover.bus = "SFX"
 	sfx_press.bus = "SFX"
 	bgm_player.bus = "BGM"
-	if AudioServer.get_bus_index("SFX") == -1:
-		push_warning("MainMenu: 'SFX' audio bus not found. Create it in Project > Audio.")
 
 	_play_fade_in()
 	_start_bgm()
@@ -132,8 +127,8 @@ func _update_idle_pulse(delta: float) -> void:
 func _start_idle_pulse() -> void:
 	_idle_pulsing = true
 	_idle_tween = create_tween().set_loops()
-	_idle_tween.tween_property(start_button, "self_modulate:a", 0.55, 0.6).set_trans(Tween.TRANS_SINE)
-	_idle_tween.tween_property(start_button, "self_modulate:a", 1.0, 0.6).set_trans(Tween.TRANS_SINE)
+	_idle_tween.tween_property(exit_button, "self_modulate:a", 0.55, 0.6).set_trans(Tween.TRANS_SINE)
+	_idle_tween.tween_property(exit_button, "self_modulate:a", 1.0, 0.6).set_trans(Tween.TRANS_SINE)
 
 
 func _stop_idle_pulse() -> void:
@@ -142,7 +137,7 @@ func _stop_idle_pulse() -> void:
 		_idle_tween = null
 	_idle_pulsing = false
 	_idle_timer = 0.0
-	start_button.self_modulate.a = 1.0
+	exit_button.self_modulate.a = 1.0
 
 
 func _update_flicker(delta: float) -> void:
@@ -161,22 +156,8 @@ func _pick_next_flicker() -> void:
 	_flicker_timer = randf_range(flicker_interval_min, flicker_interval_max)
 
 
-func _on_start_pressed() -> void:
-	_begin_transition(game_scene_path)
-
-
 func _on_exit_pressed() -> void:
 	_pending_scene = "quit"
-	_disable_buttons()
-	_fade_out_bgm()
-	animation_player.play("fade_out")
-
-
-func _begin_transition(path: String) -> void:
-	if not ResourceLoader.exists(path):
-		push_error("MainMenu: Scene not found at path: %s" % path)
-		return
-	_pending_scene = path
 	_disable_buttons()
 	_fade_out_bgm()
 	animation_player.play("fade_out")
@@ -186,8 +167,6 @@ func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "fade_out":
 		if _pending_scene == "quit":
 			get_tree().quit()
-		elif _pending_scene != "":
-			get_tree().change_scene_to_file(_pending_scene)
 
 
 func _play_fade_in() -> void:
@@ -201,8 +180,6 @@ func _start_bgm() -> void:
 	var bus_idx: int = AudioServer.get_bus_index("BGM")
 	if bus_idx != -1:
 		AudioServer.set_bus_volume_db(bus_idx, bgm_volume_db)
-	else:
-		push_warning("MainMenu: 'BGM' audio bus not found.")
 
 
 func _fade_out_bgm() -> void:
@@ -221,5 +198,4 @@ func _fade_out_bgm() -> void:
 
 func _disable_buttons() -> void:
 	_stop_idle_pulse()
-	start_button.disabled = true
 	exit_button.disabled = true
