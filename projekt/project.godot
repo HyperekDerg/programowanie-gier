@@ -22,13 +22,14 @@ buses/default_bus_layout="uid://b2myibcr3h4c"
 [autoload]
 
 TorchAudioManager="*uid://c14u3uwfbr521"
+CoinManager="*uid://b5goidmympdj8"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=3
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [global_group]
 

@@ -8,8 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://bhectn582i4qy" path="res://assets/tiles/monochrome_tilemap_packed.png" id="3_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://cont6tdshuvlh" path="res://scenes/kill_zone.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://yijtbgjj2wk4" path="res://scenes/platform.tscn" id="5_iywne"]
+[ext_resource type="FontFile" uid="uid://ops4e6oyf6mw" path="res://assets/fonts/Doto/static/Doto-Black.ttf" id="7_dinhu"]
 [ext_resource type="PackedScene" uid="uid://ddelpx2jqw660" path="res://scenes/enemy.tscn" id="9_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://dmxff4ydiafm" path="res://scenes/level_complete.tscn" id="10_vtaks"]
+[ext_resource type="Script" uid="uid://iwwexwscd3o8" path="res://scripts/hud.gd" id="11_kvpfn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gee14"]
 texture = ExtResource("2_yqjtg")
@@ -1445,6 +1447,18 @@ z_index = 5
 position = Vector2(56, -37)
 speed = 150.0
 acceleration = 300.0
+
+[node name="HUD" type="CanvasLayer" parent="Player" unique_id=665424426]
+script = ExtResource("11_kvpfn")
+
+[node name="Coins" type="Label" parent="Player/HUD" unique_id=1992879990]
+offset_left = 16.0
+offset_top = 3.0
+offset_right = 56.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("7_dinhu")
+theme_override_font_sizes/font_size = 24
+text = "COINS"
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1132565702]
 zoom = Vector2(4, 4)

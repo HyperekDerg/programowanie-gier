@@ -9,8 +9,8 @@ func _on_body_entered(body: Node2D) -> void:
 	print('+1 coin')
 	animated_sprite_2d.visible = false
 	point_light_2d.visible = false
-	
 	$CollisionShape2D.set_deferred("disabled", true)
+	CoinManager.add_coin()
 	audio_stream_player_2d.play()
 	await audio_stream_player_2d.finished
 	queue_free()
