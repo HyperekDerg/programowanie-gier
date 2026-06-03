@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bnl3dcfnyi1tv"]
+
+[ext_resource type="Script" uid="uid://86fxjkjasup2" path="res://scripts/enemy.gd" id="1_7k104"]
+[ext_resource type="PackedScene" uid="uid://bxbm4ydxko8a4" path="res://scenes/bullet.tscn" id="2_qi2p4"]
+[ext_resource type="PackedScene" uid="uid://ckytdbiaq05q2" path="res://scenes/explosion.tscn" id="3_iifgy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7k104"]
+albedo_color = Color(0.53355026, 0.12483885, 0.09490562, 1)
+emission_enabled = true
+emission = Color(0.50915545, 0.21023434, 0.27172264, 1)
+emission_energy_multiplier = 1.45
+emission_operator = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7xaro"]
+material = SubResource("StandardMaterial3D_7k104")
+height = 1.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7k104"]
+radius = 0.52734375
+height = 1.2417603
+
+[node name="Enemy" type="Node3D" unique_id=2112897037]
+script = ExtResource("1_7k104")
+bullet_scene = ExtResource("2_qi2p4")
+explosion_scene = ExtResource("3_iifgy")
+
+[node name="Enemy_Mesh" type="MeshInstance3D" parent="." unique_id=189760411]
+mesh = SubResource("CapsuleMesh_7xaro")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1221623684]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1931307123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0047302246, 0)
+shape = SubResource("CapsuleShape3D_7k104")

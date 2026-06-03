@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dix8d573e5dnv"]
+
+[ext_resource type="Script" uid="uid://sxb1ixame6wg" path="res://scripts/boss.gd" id="1_0bnu1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mihky"]
+size = Vector3(1.4, 1.435, 0.395)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0bnu1"]
+size = Vector3(1.5175629, 1.4694824, 0.49926758)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6xxrv"]
+radius = 0.3312481
+
+[node name="Boss" type="Node3D" unique_id=1617651832]
+script = ExtResource("1_0bnu1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=852489506]
+mesh = SubResource("BoxMesh_mihky")
+
+[node name="HitboxPhase1" type="Area3D" parent="MeshInstance3D" unique_id=1732527357]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/HitboxPhase1" unique_id=902063131]
+transform = Transform3D(0.9999881, -0.0046131727, 0.0016063049, 0.004617511, 0.9999857, -0.0027038783, -0.0015937923, 0.0027112726, 0.99999505, 0.024287757, 0.022080287, 0.04677386)
+shape = SubResource("BoxShape3D_0bnu1")
+
+[node name="HitboxPhase2" type="Area3D" parent="MeshInstance3D" unique_id=537180429]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/HitboxPhase2" unique_id=1587772460]
+shape = SubResource("SphereShape3D_6xxrv")
+debug_color = Color(0.94341296, 0.11517041, 0.52464455, 0.41960785)
