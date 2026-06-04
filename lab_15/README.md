@@ -44,7 +44,7 @@ cd programowanie-gier/lab_15
 
 ---
 
-## ✨ Własny mechanizm
+## Własny mechanizm
 
 ### System pochodni z przestrzennym audio i flickerem
 
@@ -56,13 +56,13 @@ Dźwięk pochodni obsługuje globalny singleton `TorchAudioManager` — zamiast 
 
 ---
 
-## 🕹️ Czy projekt jest klonem?
+## Czy projekt jest klonem?
 
 - [X] Nie — oryginalny pomysł
 
 ---
 
-## 🎵 Wykorzystane zasoby
+## Wykorzystane zasoby
 
 ### Muzyka i dźwięki
 
@@ -93,7 +93,7 @@ Dźwięk pochodni obsługuje globalny singleton `TorchAudioManager` — zamiast 
 
 ---
 
-## 🧩 Mechaniki techniczne
+## Mechaniki techniczne
 
 - **Maszyna stanów (FSM):**
   - *Gracz* (`player.gd`): stany animacji — `Idle`, `Walk`, `Run`, `Jump`, `Crouch`, `Death`; zarządzanie flagi `dead` / `level_complete`.
@@ -110,13 +110,13 @@ Dźwięk pochodni obsługuje globalny singleton `TorchAudioManager` — zamiast 
 
 ---
 
-## 🐛 Znane bugi i ograniczenia
+## Znane bugi i ograniczenia
 
 - [ ] Bieg gracza jest nieprawidłowy w przypadku biegu po rurach.
 - [ ] AI wrogów nie reaguje na krawędzie platform (może spaść).
 
 ---
 
-## 👤 Autor
+## Autor
 
 **Jakub Rudnicki** — 89213
